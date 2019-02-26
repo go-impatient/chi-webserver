@@ -99,6 +99,24 @@
 			"revisionTime": "2018-10-23T02:56:33Z"
 		},
 		{
+			"checksumSHA1": "AQWsGQcvriCrd5yw3TatzSdi1wY=",
+			"path": "github.com/go-chi/chi",
+			"revision": "3ee2f9a37ff10b5e497566fc4c0d5726cad7f50f",
+			"revisionTime": "2019-02-24T18:52:45Z"
+		},
+		{
+			"checksumSHA1": "IX+obgEqlEx4Pk4G9rXDzVOBpv0=",
+			"path": "github.com/go-chi/chi/middleware",
+			"revision": "3ee2f9a37ff10b5e497566fc4c0d5726cad7f50f",
+			"revisionTime": "2019-02-24T18:52:45Z"
+		},
+		{
+			"checksumSHA1": "n9ry/OHiteTTjZOeJHTrEwRSnms=",
+			"path": "github.com/go-chi/cors",
+			"revision": "07727c846d14299758e54a275dd8c81353c01960",
+			"revisionTime": "2018-08-16T15:23:45Z"
+		},
+		{
 			"checksumSHA1": "cCnXW4GTLZA0tOv56ClSDo8LSLo=",
 			"path": "github.com/go-ole/go-ole",
 			"revision": "39dc8486bd0952279431257138bc428275b86797",
