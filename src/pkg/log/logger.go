@@ -1,65 +1,49 @@
-package log
+// Copyright 2019 Drone IO, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package logger
 
 import (
-	"github.com/sevennt/wzap"
+	"context"
+	"net/http"
+
+	"github.com/sirupsen/logrus"
 )
 
-// Debug logs debug level messages with default logger.
-func Debug(msg string, args ...interface{}) {
-	wzap.Debug(msg, args...)
+type loggerKey struct{}
+
+// L is an alias for the the standard logger.
+var L = logrus.NewEntry(logrus.StandardLogger())
+
+// WithContext returns a new context with the provided logger. Use in
+// combination with logger.WithField(s) for great effect.
+func WithContext(ctx context.Context, logger *logrus.Entry) context.Context {
+	return context.WithValue(ctx, loggerKey{}, logger)
 }
 
-// Debugf logs debug level messages with default logger in printf-style.
-func Debugf(msg string, args ...interface{}) {
-	wzap.Debugf(msg, args...)
+// FromContext retrieves the current logger from the context. If no
+// logger is available, the default logger is returned.
+func FromContext(ctx context.Context) *logrus.Entry {
+	logger := ctx.Value(loggerKey{})
+	if logger == nil {
+		return L
+	}
+	return logger.(*logrus.Entry)
 }
 
-// Info logs Info level messages with default logger in structured-style.
-func Info(msg string, args ...interface{}) {
-	wzap.Info(msg, args...)
-}
-
-// Infof logs Info level messages with default logger in printf-style.
-func Infof(msg string, args ...interface{}) {
-	wzap.Infof(msg, args...)
-}
-
-// Warn logs Warn level messages with default logger in structured-style.
-func Warn(msg string, args ...interface{}) {
-	wzap.Warn(msg, args...)
-}
-
-// Warnf logs Warn level messages with default logger in printf-style.
-func Warnf(msg string, args ...interface{}) {
-	wzap.Warnf(msg, args...)
-}
-
-// Error logs Error level messages with default logger in structured-style.
-func Error(msg string, args ...interface{}) {
-	wzap.Error(msg, args...)
-}
-
-// Errorf logs Error level messages with default logger in printf-style.
-func Errorf(msg string, args ...interface{}) {
-	wzap.Errorf(msg, args...)
-}
-
-// Panic logs Panic level messages with default logger in structured-style.
-func Panic(msg string, args ...interface{}) {
-	wzap.Panic(msg, args...)
-}
-
-// Panicf logs Panicf level messages with default logger in printf-style.
-func Panicf(msg string, args ...interface{}) {
-	wzap.Panicf(msg, args...)
-}
-
-// Fatal logs Fatal level messages with default logger in structured-style.
-func Fatal(msg string, args ...interface{}) {
-	wzap.Fatal(msg, args...)
-}
-
-// Fatalf logs Fatalf level messages with default logger in printf-style.
-func Fatalf(msg string, args ...interface{}) {
-	wzap.Fatalf(msg, args...)
+// FromRequest retrieves the current logger from the request. If no
+// logger is available, the default logger is returned.
+func FromRequest(r *http.Request) *logrus.Entry {
+	return FromContext(r.Context())
 }
