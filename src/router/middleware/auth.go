@@ -1,14 +1,15 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-func Auth() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// Parse the json web token.
+func Auth(next http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 
-		c.Next()
+
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
+	return http.HandlerFunc(fn)
 }
-

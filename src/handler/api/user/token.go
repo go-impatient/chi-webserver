@@ -1,12 +1,12 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
+
 	"github.com/moocss/chi-webserver/src/service"
 )
 
-func HandleFindToken(userService service.UserService) gin.HandlerFunc {
-	return func(c *gin.Context) {
-
+func HandleFindToken(userService service.UserService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
 	}
 }

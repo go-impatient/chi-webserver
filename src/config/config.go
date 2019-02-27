@@ -28,15 +28,11 @@ core:
     host: ""                      # which domains the Let's Encrypt will attempt
 
 log:
-    default_dir: "./../log/"         # 设置默认输出目录
-    console:
-      color: true
-      prefix: "[WEBSERVER]"
-      level: "Debug|Info|Warn|Error"
-    zap:
-      path: "./webserver-api.log"
-      level: "Debug"
-
+  debug: true
+  trace: false
+  color: true
+  pretty: true
+  text: true
 db:
   dialect: "mysql"                # "postgres" or "mysql"
   db_name: "db_apiserver"
@@ -109,18 +105,11 @@ type (
 
 	// ConfigLog is sub section of config.
 	ConfigLog struct {
-		DefaultDir string					`yaml:"default_dir"`
-		Console *ConfigLogConsole `yaml:"console"`
-		Zap     *ConfigLogZap     `yaml:"zap"`
-	}
-	ConfigLogConsole struct {
-		Color  bool   `yaml:"color"`
-		Prefix string `yaml:"prefix"`
-		Level  string `yaml:"level"`
-	}
-	ConfigLogZap struct {
-		Path  string `yaml:"path"`
-		Level string `yaml:"level"`
+		Debug  bool `yaml:"debug"`
+		Trace  bool `yaml:"trace"`
+		Color  bool `yaml:"color"`
+		Pretty bool `yaml:"pretty"`
+		Text   bool `yaml:"text"`
 	}
 
 	// ConfigDb is sub section of config.
@@ -240,16 +229,11 @@ func LoadConfig(filePath string) (*Config, error) {
 			},
 		},
 		Log: &ConfigLog{
-			DefaultDir: viper.GetString("log.default_dir"),
-			Console: &ConfigLogConsole{
-				Color:  viper.GetBool("log.console.color"),
-				Prefix: viper.GetString("log.console.prefix"),
-				Level:  viper.GetString("log.console.level"),
-			},
-			Zap: &ConfigLogZap{
-				Path:  viper.GetString("log.zap.path"),
-				Level: viper.GetString("log.zap.level"),
-			},
+			Debug: viper.GetBool("log.debug"),
+			Trace: viper.GetBool("log.trace"),
+			Color: viper.GetBool("log.color"),
+			Pretty: viper.GetBool("log.pretty"),
+			Text: viper.GetBool("log.text"),
 		},
 		Db: &ConfigDb{
 			Unix:            viper.GetString("db.unix"),

@@ -47,11 +47,11 @@ func (suite *ConfigTestSuite) TestValidateConfDefault() {
 	assert.Equal(suite.T(), "", suite.ConfDefault.Core.TLS.KeyPath)
 
 	// Log
-	assert.Equal(suite.T(), true, suite.ConfDefault.Log.Console.Color)
-	assert.Equal(suite.T(), "[webserver]", suite.ConfDefault.Log.Console.Prefix)
-	assert.Equal(suite.T(), "debug", suite.ConfDefault.Log.Console.Level)
-	assert.Equal(suite.T(), "webserver-api.log", suite.ConfDefault.Log.Zap.Path)
-	assert.Equal(suite.T(), "debug", suite.ConfDefault.Log.Zap.Level)
+	assert.Equal(suite.T(), true, suite.ConfDefault.Log.Debug)
+	assert.Equal(suite.T(), true, suite.ConfDefault.Log.Color)
+	assert.Equal(suite.T(), true, suite.ConfDefault.Log.Pretty)
+	assert.Equal(suite.T(), true, suite.ConfDefault.Log.Text)
+	assert.Equal(suite.T(), true, suite.ConfDefault.Log.Trace)
 
 	// Db
 	assert.Equal(suite.T(), "db_apiserver", suite.ConfDefault.Db.DbName)
@@ -83,12 +83,11 @@ func (suite *ConfigTestSuite) TestValidateConf() {
 	assert.Equal(suite.T(), "", suite.Conf.Core.TLS.KeyPath)
 
 	// Log
-	assert.Equal(suite.T(), "./log/", suite.Conf.Log.DefaultDir)
-	assert.Equal(suite.T(), true, suite.Conf.Log.Console.Color)
-	assert.Equal(suite.T(), "[webserver]", suite.Conf.Log.Console.Prefix)
-	assert.Equal(suite.T(), "debug", suite.Conf.Log.Console.Level)
-	assert.Equal(suite.T(), "webserver-api.log", suite.Conf.Log.Zap.Path)
-	assert.Equal(suite.T(), "debug", suite.Conf.Log.Zap.Level)
+	assert.Equal(suite.T(), true, suite.Conf.Log.Debug)
+	assert.Equal(suite.T(), true, suite.Conf.Log.Color)
+	assert.Equal(suite.T(), true, suite.Conf.Log.Pretty)
+	assert.Equal(suite.T(), true, suite.Conf.Log.Text)
+	assert.Equal(suite.T(), true, suite.Conf.Log.Trace)
 
 	// Db
 	assert.Equal(suite.T(), "db_apiserver", suite.Conf.Db.DbName)

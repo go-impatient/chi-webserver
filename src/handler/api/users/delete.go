@@ -1,25 +1,26 @@
 package users
 
 import (
+	"net/http"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
+	"github.com/go-chi/chi"
 	"github.com/moocss/chi-webserver/src/model"
 	"github.com/moocss/chi-webserver/src/pkg/errno"
 	"github.com/moocss/chi-webserver/src/service"
 )
 
-func HandleDelete(userService service.UserService) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		userId, _ := strconv.Atoi(c.Param("id"))
+func HandleDelete(userService service.UserService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userId, _ := strconv.Atoi(chi.URLParam(r, "id"))
 		user := &model.User{}
 		user.ID = uint64(userId)
 
 		if err := userService.DeleteUser(user); err != nil {
-			model.SendResult(c, errno.ErrDatabase, nil)
+			model.SendResult(w, nil, errno.ErrDatabase, )
 			return
 		}
 
-		model.SendResult(c, nil, nil)
+		model.SendResult(w, nil, nil)
 	}
 }

@@ -3,8 +3,8 @@ package model
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/moocss/chi-webserver/src/pkg/errno"
+	"github.com/moocss/chi-webserver/src/pkg/render"
 )
 
 // Result represents HTTP response body.
@@ -15,12 +15,11 @@ type Result struct {
 }
 
 // 输出返回结果
-func SendResult(c *gin.Context, err error, data interface{}) {
+func SendResult(w http.ResponseWriter, data interface{}, err error) {
 	code, message := errno.DecodeErr(err)
-
-	c.JSON(http.StatusOK, &Result{
+	render.JSON(w, &Result{
 		Code:    code,
 		Message: message,
 		Data:    data,
-	})
+	}, http.StatusOK)
 }

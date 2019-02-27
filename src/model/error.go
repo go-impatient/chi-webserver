@@ -1,8 +1,9 @@
 package model
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/moocss/chi-webserver/src/pkg/render"
 )
 
 // The Error contains error relevant information.
@@ -17,11 +18,11 @@ type Error struct {
 	ErrorDescription string `json:"error_description"`
 }
 
-func SendError(c *gin.Context) {
-	c.JSON(http.StatusNotFound, &Error{
+func SendError(w http.ResponseWriter) {
+	render.JSON(w, &Error{
 		Error:            http.StatusText(http.StatusNotFound),
 		ErrorCode:        http.StatusNotFound,
 		ErrorDescription: "page not found",
-	})
+	}, http.StatusNotFound)
 }
 

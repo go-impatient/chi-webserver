@@ -16,14 +16,11 @@ core:
     host: ""                      # which domains the Let's Encrypt will attempt
 
 log:
-  default_dir: "./../log/"         # 设置默认输出目录
-  console:
-    color: true
-    prefix: "[WEBSERVER]"
-    level: "Debug|Info|Warn|Error"
-  zap:
-    path: "./webserver-api.log"
-    level: "Debug"
+  debug: true
+  trace: false
+  color: true
+  pretty: true
+  text: true
 
 db:
   dialect: "mysql"                # "postgres" or "mysql"

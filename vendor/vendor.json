@@ -321,6 +321,12 @@
 			"revisionTime": "2018-07-22T03:51:51Z"
 		},
 		{
+			"checksumSHA1": "Aulh7C5SVOA4Jzt5eHNH6197Mbk=",
+			"path": "github.com/konsorten/go-windows-terminal-sequences",
+			"revision": "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e",
+			"revisionTime": "2019-02-26T22:47:05Z"
+		},
+		{
 			"checksumSHA1": "O5KNHAjNKSO1Wh5/4JSnp/KXu9U=",
 			"path": "github.com/leodido/go-urn",
 			"revision": "a67a23e1c1af3c66528573bb86a87246477277c1",
@@ -418,6 +424,12 @@
 			"revisionTime": "2018-10-28T12:50:25Z"
 		},
 		{
+			"checksumSHA1": "MBPOff+xb52m4W9r6N00Jy3QGWw=",
+			"path": "github.com/segmentio/ksuid",
+			"revision": "b85603ccf83fccc141ffd36f9290976bf242aa91",
+			"revisionTime": "2018-10-18T14:38:15Z"
+		},
+		{
 			"checksumSHA1": "JwF6Ub8QxxM1G2lS9IWMC2s1GeU=",
 			"path": "github.com/sevennt/wzap",
 			"revision": "bf0f1e83f88815107612d675ce0017208cc7f120",
@@ -462,6 +474,12 @@
 			"path": "github.com/shirou/gopsutil/mem",
 			"revision": "071446942108a03a13cf0717275ad3bdbcb691b4",
 			"revisionTime": "2019-01-31T15:11:21Z"
+		},
+		{
+			"checksumSHA1": "KIAfjm15EMYrXXbVBUO6ZX9c4t0=",
+			"path": "github.com/sirupsen/logrus",
+			"revision": "4f5fd631f16452fbd023813c1eb7dbd67130cb0c",
+			"revisionTime": "2019-02-20T17:22:53Z"
 		},
 		{
 			"checksumSHA1": "RXdGcEWihBEokWLc+LTy/UnI8OM=",

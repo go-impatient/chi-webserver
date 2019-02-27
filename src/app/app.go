@@ -3,6 +3,8 @@ package app
 import (
 	"crypto/tls"
 	"errors"
+	"github.com/go-chi/chi"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"os/signal"
@@ -11,7 +13,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sevennt/wzap"
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/sync/errgroup"
 
@@ -19,7 +20,6 @@ import (
 	"github.com/moocss/chi-webserver/src/dao"
 	"github.com/moocss/chi-webserver/src/pkg/log"
 	"github.com/moocss/chi-webserver/src/router"
-	"github.com/moocss/chi-webserver/src/router/middleware"
 	"github.com/moocss/chi-webserver/src/service"
 	"github.com/moocss/chi-webserver/src/util"
 )
@@ -42,19 +42,22 @@ func New(cfg *config.Config, dao *dao.Dao, svc service.Service) *App {
 
 // InitLog 初始化日志配置
 func (app *App) InitLog() {
-	wzap.SetDefaultDir(app.config.Log.DefaultDir)
-	logger := wzap.New(
-		wzap.WithOutput(
-			wzap.WithLevelCombo(app.config.Log.Zap.Level),
-			wzap.WithPath(app.config.Log.Zap.Path),
-		),
-		wzap.WithOutput(
-			wzap.WithLevelCombo(app.config.Log.Console.Level),
-			wzap.WithColorful(app.config.Log.Console.Color),
-			wzap.WithPrefix(app.config.Log.Console.Prefix),
-		),
-	)
-	wzap.SetDefaultLogger(logger)
+	if app.config.Log.Debug {
+		logrus.SetLevel(logrus.DebugLevel)
+	}
+	if app.config.Log.Trace {
+		logrus.SetLevel(logrus.TraceLevel)
+	}
+	if app.config.Log.Text {
+		logrus.SetFormatter(&logrus.TextFormatter{
+			ForceColors:   app.config.Log.Color,
+			DisableColors: !app.config.Log.Color,
+		})
+	} else {
+		logrus.SetFormatter(&logrus.JSONFormatter{
+			PrettyPrint: app.config.Log.Pretty,
+		})
+	}
 }
 
 // RunHTTPServer provide run http or https protocol.
@@ -154,7 +157,7 @@ func (app *App) redirect(w http.ResponseWriter, req *http.Request) {
 }
 
 // serve returns a app instance
-func serve(app *App) *gin.Engine {
+func serve(app *App) *chi.Mux {
 	// Set gin mode.
 	setRuntimeMode(app.config.Core.Mode)
 
@@ -164,7 +167,7 @@ func serve(app *App) *gin.Engine {
 		app.service,
 
 		// Middlwares
-		middleware.RequestId(),
+
 	)
 
 	return handler
